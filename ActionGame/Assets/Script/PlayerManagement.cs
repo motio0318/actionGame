@@ -27,6 +27,7 @@ public class PlayerManagement : MonoBehaviour
      void Update()
     {
 
+        //LookMoveDirec();
         Move();
 
     }
@@ -36,6 +37,19 @@ public class PlayerManagement : MonoBehaviour
         rigid.velocity = new Vector2(inputDirection.x * moveSpeed, rigid.velocity.y);
         anime.SetBool("Walk", inputDirection.x != 0.0f);
     }
+
+    private void LookMoveDirec()
+    {
+        if (inputDirection.x > 0.0f)
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
+        else if (inputDirection.x < 0.0f)
+        {
+            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+        }
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -63,6 +77,7 @@ public class PlayerManagement : MonoBehaviour
     {
         inputDirection = context.ReadValue<Vector2>();
     }
+
 
     public void OnJump(InputAction.CallbackContext context)
     {
