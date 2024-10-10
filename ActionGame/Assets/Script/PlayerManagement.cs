@@ -14,11 +14,13 @@ public class PlayerManagement : MonoBehaviour
 
     private Vector2 inputDirection;
     private Rigidbody2D rigid;
+    private Animator anime;
     private bool bJump;
 
      void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anime = GetComponent<Animator>();
         bJump = false;
     }
 
@@ -32,6 +34,7 @@ public class PlayerManagement : MonoBehaviour
     private void Move()
     {
         rigid.velocity = new Vector2(inputDirection.x * moveSpeed, rigid.velocity.y);
+        anime.SetBool("Walk", inputDirection.x != 0.0f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -39,6 +42,20 @@ public class PlayerManagement : MonoBehaviour
         if(collision.gameObject.tag == "Tilemap")
         {
             bJump = false;
+        }
+        if(collision.gameObject.tag == "Enemy")
+        {
+            HitEnemy(collision.gameObject);
+        }
+    }
+
+    private void HitEnemy(GameObject enemy)
+    {
+        float halfScaleY = transform.lossyScale.y / 2.0f;
+        float enemyHalfScaleY = enemy.transform.lossyScale.y / 2.0f;
+        if(transform.position.y - (halfScaleY - 0.1f) >= enemy.transform.position.y + (enemyHalfScaleY - 0.1f))
+        {
+            Destroy(enemy);
         }
     }
 
