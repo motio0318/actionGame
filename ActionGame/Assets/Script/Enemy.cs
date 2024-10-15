@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("ˆÚ“®‘¬“x")]
     private float moveSpeed;
 
+
     private Rigidbody2D rigid;
 
 
@@ -30,4 +31,5 @@ public class Enemy : MonoBehaviour
     {
         rigid.velocity = new Vector2(Vector2.left.x * moveSpeed, rigid.velocity.y);
     }
+
 }

@@ -10,6 +10,10 @@ public class PlayerManagement : MonoBehaviour
     private float moveSpeed;
     [SerializeField, Header("ジャンプ速度")]
     private float jumpSpeed;
+    [SerializeField, Header("HP")]
+    private int hp = 3;
+
+    private int currentHp;
 
 
     private Vector2 inputDirection;
@@ -22,6 +26,9 @@ public class PlayerManagement : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
         bJump = false;
+
+        //現在のHPを最大HPに設定
+        currentHp = hp;
     }
 
      void Update()
@@ -29,6 +36,8 @@ public class PlayerManagement : MonoBehaviour
 
         //LookMoveDirec();
         Move();
+
+        LookMoveDirec();
 
     }
 
@@ -59,23 +68,57 @@ public class PlayerManagement : MonoBehaviour
         }
         if(collision.gameObject.tag == "Enemy")
         {
-            HitEnemy(collision.gameObject);
+           bool enemyDefeated =  HitEnemy(collision.gameObject,collision);
+
+            if(!enemyDefeated)
+            {
+                //ダメージを受ける処理
+                TakeDamage(1);
+
+            }
         }
     }
 
-    private void HitEnemy(GameObject enemy)
+    private bool HitEnemy(GameObject enemy, Collision2D collision)
     {
-        float halfScaleY = transform.lossyScale.y / 2.0f;
-        float enemyHalfScaleY = enemy.transform.lossyScale.y / 2.0f;
-        if(transform.position.y - (halfScaleY - 0.1f) >= enemy.transform.position.y + (enemyHalfScaleY - 0.1f))
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            Destroy(enemy);
+
+            //プレイヤーが敵の上から当たっているかチェック
+            if(contact.normal.y > 0.5f)
+            {
+                Destroy(enemy);
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+    private void TakeDamage(int damage)
+    {
+        currentHp -= damage;
+
+        Debug.Log(currentHp);
+        if(currentHp <= 0)
+        {
+            Die();
         }
     }
+
+
+    private void Die()
+    {
+        Debug.Log("死亡");
+
+    }
+
 
     public void OnMove(InputAction.CallbackContext context)
     {
         inputDirection = context.ReadValue<Vector2>();
+
+
     }
 
 
@@ -87,7 +130,6 @@ public class PlayerManagement : MonoBehaviour
         bJump = true;
 
     }
-
 
 }
 
