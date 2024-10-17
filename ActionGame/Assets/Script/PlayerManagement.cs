@@ -13,7 +13,6 @@ public class PlayerManagement : MonoBehaviour
     [SerializeField, Header("HP")]
     private int hp = 3;
 
-    private int currentHp;
 
 
     private Vector2 inputDirection;
@@ -27,8 +26,6 @@ public class PlayerManagement : MonoBehaviour
         anime = GetComponent<Animator>();
         bJump = false;
 
-        //Œ»Ý‚ÌHP‚ðÅ‘åHP‚ÉÝ’è
-        currentHp = hp;
     }
 
      void Update()
@@ -65,6 +62,7 @@ public class PlayerManagement : MonoBehaviour
         if(collision.gameObject.tag == "Tilemap")
         {
             bJump = false;
+            anime.SetBool("Jump", bJump);
         }
         if(collision.gameObject.tag == "Enemy")
         {
@@ -88,6 +86,7 @@ public class PlayerManagement : MonoBehaviour
             if(contact.normal.y > 0.5f)
             {
                 Destroy(enemy);
+                rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
                 return true;
             }
         }
@@ -97,19 +96,27 @@ public class PlayerManagement : MonoBehaviour
     }
     private void TakeDamage(int damage)
     {
-        currentHp -= damage;
+        hp -= damage;
 
-        Debug.Log(currentHp);
-        if(currentHp <= 0)
+        Debug.Log(hp);
+        if(hp <= 0)
         {
             Die();
         }
+    }
+    public int GetHp()
+    {
+        return hp;
     }
 
 
     private void Die()
     {
         Debug.Log("Ž€–S");
+        if(hp <= 0)
+        {
+            Destroy(gameObject);
+        }
 
     }
 
@@ -128,8 +135,10 @@ public class PlayerManagement : MonoBehaviour
 
         rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         bJump = true;
+        anime.SetBool("Jump", bJump);
 
     }
+
 
 }
 
