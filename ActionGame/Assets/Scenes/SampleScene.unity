@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 643190038}
   - component: {fileID: 643190037}
   - component: {fileID: 643190042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a90206d3d6d4649838620bb9f24a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 2
 --- !u!61 &643190038
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &643190040
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1406,7 +1406,7 @@ Transform:
   m_GameObject: {fileID: 2066637688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.88, y: -1.78, z: 0}
+  m_LocalPosition: {x: -8.02, y: -2.67, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1499,6 +1499,8 @@ MonoBehaviour:
   moveSpeed: 5
   jumpSpeed: 15
   hp: 3
+  damageaTime: 5
+  flashTime: 0.1
 --- !u!114 &2066637694
 MonoBehaviour:
   m_ObjectHideFlags: 0
