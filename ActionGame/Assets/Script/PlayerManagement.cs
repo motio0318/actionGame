@@ -50,37 +50,46 @@ public class PlayerManagement : MonoBehaviour
 
     private void Move()
     {
-        // 現在の位置を取得し、入力方向に基づいて新しい位置を計算
-        Vector3 newPosition = transform.position + new Vector3(inputDirection.x, 0, 0) * moveSpeed * Time.deltaTime;
-        // 計算した位置にオブジェクトを移動
-        transform.position = newPosition;
+        //// 現在の位置を取得し、入力方向に基づいて新しい位置を計算
+        //Vector3 newPosition = transform.position + new Vector3(inputDirection.x, 0, 0) * moveSpeed * Time.deltaTime;
+        //// 計算した位置にオブジェクトを移動
+        //transform.position = newPosition;
+        rigid.velocity = new Vector2(inputDirection.x * moveSpeed, rigid.velocity.y);
         anime.SetBool("Walk", inputDirection.x != 0.0f);
     }
 
     private void LookMoveDirec()
 
     {
-        Vector3 currentScale = transform.localScale;
 
-        if (inputDirection.x > 0.0f)
 
-        {
+            if (inputDirection.x > 0.0f)
+            {
+                transform.eulerAngles = Vector3.zero;
+            }
+            else if (inputDirection.x < 0.0f)
+            {
+                transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+            }
+        //Vector3 currentScale = transform.localScale;
 
-            // 右向きにする (スケールを正に設定)
+        //if (inputDirection.x > 0.0f)
 
-            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), transform.localScale.y, transform.localScale.z);
+        //{
+        //    // 右向きにする (スケールを正に設定)
+        //    transform.localScale = new Vector3(Mathf.Abs(currentScale.x), transform.localScale.y, transform.localScale.z);
 
-        }
+        //}
 
-        else if (inputDirection.x < 0.0f)
+        //else if (inputDirection.x < 0.0f)
 
-        {
+        //{
 
-            // 左向きにする (スケールを反転)
+        //    // 左向きにする (スケールを反転)
 
-            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), transform.localScale.y, transform.localScale.z);
+        //    transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), transform.localScale.y, transform.localScale.z);
 
-        }
+        //}
 
     }
 
@@ -92,7 +101,7 @@ public class PlayerManagement : MonoBehaviour
             bJump = false;
             anime.SetBool("Jump", bJump);
         }
-        if(collision.gameObject.tag == "Enemy")
+        else if(collision.gameObject.tag == "Enemy")
         {
            bool enemyDefeated =  HitEnemy(collision.gameObject,collision);
             gameObject.layer = LayerMask.NameToLayer("PlayerDamage");
@@ -102,6 +111,15 @@ public class PlayerManagement : MonoBehaviour
                 TakeDamage(1);
 
             }
+        }
+        else if(collision.gameObject.tag == "Goal")
+        {
+            FindAnyObjectByType<MainManager>().ShowGameClearUI();
+            enabled = false;
+            GetComponent<PlayerInput>().enabled = false;
+
+            anime.SetBool("Walk", inputDirection.x != 0.0f);
+
         }
     }
 
@@ -171,6 +189,21 @@ public class PlayerManagement : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    private void OnBecameInvisible()
+    {
+        Camera camera = Camera.main;
+
+        if(camera != null)
+        {
+            if (camera.name == "Main Camera" && camera.transform.position.y > transform.position.y)
+            {
+                Destroy(gameObject);
+
+            }
+
+        }
     }
 
 
