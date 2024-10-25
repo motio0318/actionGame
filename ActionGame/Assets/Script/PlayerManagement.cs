@@ -45,15 +45,14 @@ public class PlayerManagement : MonoBehaviour
         //LookMoveDirec();
         Move();
         LookMoveDirec();
+        HitFloor();
 
     }
 
     private void Move()
     {
-        //// 現在の位置を取得し、入力方向に基づいて新しい位置を計算
-        //Vector3 newPosition = transform.position + new Vector3(inputDirection.x, 0, 0) * moveSpeed * Time.deltaTime;
-        //// 計算した位置にオブジェクトを移動
-        //transform.position = newPosition;
+        //if (bJump) return;
+        
         rigid.velocity = new Vector2(inputDirection.x * moveSpeed, rigid.velocity.y);
         anime.SetBool("Walk", inputDirection.x != 0.0f);
     }
@@ -95,13 +94,14 @@ public class PlayerManagement : MonoBehaviour
 
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Tilemap")
-        {
-            bJump = false;
-            anime.SetBool("Jump", bJump);
-        }
-        else if(collision.gameObject.tag == "Enemy")
+    {   
+        //if(collision.gameObject.tag == "Tilemap")
+        //{
+        //    bJump = false;
+        //    anime.SetBool("Jump", bJump);
+
+        //}
+        if(collision.gameObject.tag == "Enemy")
         {
            bool enemyDefeated =  HitEnemy(collision.gameObject,collision);
             if(!enemyDefeated)
@@ -122,6 +122,36 @@ public class PlayerManagement : MonoBehaviour
         }
     }
 
+    private void HitFloor()
+    {
+        int layerMask = LayerMask.GetMask("Tilemap");
+        float rayLength = 0.1f; // 地面の検出距離
+
+        Vector2 collisionSize = GetComponent<BoxCollider2D>().size;
+
+        Vector2 leftRayOrigin = (Vector2)transform.position + new Vector2(-collisionSize.x * transform.lossyScale.x / 2 + 0.1f, -collisionSize.y * transform.lossyScale.y / 2);
+        Vector2 rightRayOrigin = (Vector2)transform.position + new Vector2(collisionSize.x * transform.lossyScale.x / 2 - 0.1f, -collisionSize.y * transform.lossyScale.y / 2);
+        RaycastHit2D leftHit = Physics2D.Raycast(leftRayOrigin, Vector2.down, rayLength, layerMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(rightRayOrigin, Vector2.down, rayLength, layerMask);
+        if (leftHit.collider != null || rightHit.collider != null)
+        {
+            // 地面に接触している
+            if (bJump)
+            {
+                bJump = false;
+                anime.SetBool("Jump", bJump);
+            }
+        }
+        else
+        {
+            // 地面に接触していない
+            if (!bJump)
+            {
+                bJump = true;
+                anime.SetBool("Jump", bJump);
+            }
+        }
+    }
     private bool HitEnemy(GameObject enemy, Collision2D collision)
     {
         foreach (ContactPoint2D contact in collision.contacts)
@@ -223,8 +253,6 @@ public class PlayerManagement : MonoBehaviour
         if (!context.performed || bJump) return;
 
         rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
-        bJump = true;
-        anime.SetBool("Jump", bJump);
 
     }
 
