@@ -104,7 +104,6 @@ public class PlayerManagement : MonoBehaviour
         else if(collision.gameObject.tag == "Enemy")
         {
            bool enemyDefeated =  HitEnemy(collision.gameObject,collision);
-            gameObject.layer = LayerMask.NameToLayer("PlayerDamage");
             if(!enemyDefeated)
             {
                 //ƒ_ƒ[ƒW‚ğó‚¯‚éˆ—
@@ -133,6 +132,8 @@ public class PlayerManagement : MonoBehaviour
             {
                 Destroy(enemy);
                 rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+
+
                 return true;
             }
             else
@@ -149,6 +150,8 @@ public class PlayerManagement : MonoBehaviour
 
     IEnumerator Damage()
     {
+        gameObject.layer = LayerMask.NameToLayer("PlayerDamage");
+
         Color color = spriteRenderer.color;
         for(int i = 0;i < damageaTime; i++)
         {
