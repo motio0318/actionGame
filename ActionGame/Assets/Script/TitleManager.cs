@@ -5,9 +5,16 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class TitleManager : MonoBehaviour
 {
+
+    private bool bStart;
+    private Fade fade;
+
     // Start is called before the first frame update
     void Start()
     {
+        bStart = false;
+        fade = FindAnyObjectByType<Fade>();
+        fade.FadeStart(TitleStart);
         
     }
 
@@ -16,11 +23,21 @@ public class TitleManager : MonoBehaviour
     {
         
     }
+    private void TitleStart()
+    {
+        bStart = true;
+    }
+
+    private void ChangeScene()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
     public void OnSpaceClick(InputAction.CallbackContext context)
     {
-        if(!context.performed)
+        if(!context.performed && bStart)
         {
-            SceneManager.LoadScene("SampleScene");
+            fade.FadeStart(ChangeScene);
+            bStart = false;
         }
     }
 }
