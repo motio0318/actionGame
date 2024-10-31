@@ -20,7 +20,7 @@ public class MainManager : MonoBehaviour
     {
         player = FindObjectOfType<PlayerManagement>().gameObject;
         bShoeUI = false;
-        FindObjectOfType<Fade>().FadeStart(MainStart);
+
         player.GetComponent<PlayerManagement>().enabled = false;
         foreach(EnemySpawner enemySpawner in FindObjectsOfType<EnemySpawner>())
         {

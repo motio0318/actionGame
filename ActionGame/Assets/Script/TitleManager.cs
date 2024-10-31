@@ -13,15 +13,13 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         bStart = false;
-        fade = FindAnyObjectByType<Fade>();
-        fade.FadeStart(TitleStart);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ChangeScene();
     }
     private void TitleStart()
     {
@@ -30,14 +28,12 @@ public class TitleManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        SceneManager.LoadScene("SampleScene");
-    }
-    public void OnSpaceClick(InputAction.CallbackContext context)
-    {
-        if(!context.performed && bStart)
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            fade.FadeStart(ChangeScene);
-            bStart = false;
+            Initiate.Fade("SampleScene", Color.black, 1.0f);
         }
+
     }
+
+
 }
