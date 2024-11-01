@@ -21,10 +21,10 @@ public class MainManager : MonoBehaviour
         player = FindObjectOfType<PlayerManagement>().gameObject;
         bShoeUI = false;
 
-        player.GetComponent<PlayerManagement>().enabled = false;
+        player.GetComponent<PlayerManagement>().enabled = true;
         foreach(EnemySpawner enemySpawner in FindObjectsOfType<EnemySpawner>())
         {
-            enemySpawner.enabled = false;
+            enemySpawner.enabled = true;
         }
     }
 
