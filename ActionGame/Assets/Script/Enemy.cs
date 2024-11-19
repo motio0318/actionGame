@@ -10,8 +10,6 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rigid;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -31,5 +29,6 @@ public class Enemy : MonoBehaviour
     {
         rigid.velocity = new Vector2(Vector2.left.x * moveSpeed, rigid.velocity.y);
     }
+
 
 }

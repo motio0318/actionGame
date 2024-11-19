@@ -660,7 +660,7 @@ Transform:
   m_GameObject: {fileID: 304346203}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 83.7, y: 0.1, z: 0}
+  m_LocalPosition: {x: 68.98, y: -3.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1175,7 +1175,7 @@ Transform:
   m_GameObject: {fileID: 419567770}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.91, y: -2.09, z: 0}
+  m_LocalPosition: {x: 15.43, y: -2.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1281,6 +1281,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallxEffect: 0.6
+--- !u!1 &507645780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507645781}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &507645781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507645780}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.33, y: 0.073, z: 0}
+  m_LocalScale: {x: 0, y: 0.27992085, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2066637690}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,7 +2200,7 @@ Transform:
   m_GameObject: {fileID: 918114616}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 86, y: -3, z: 0}
+  m_LocalPosition: {x: 76.75, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6266,10 +6297,11 @@ Transform:
   m_GameObject: {fileID: 2066637688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.78, y: -2.95, z: 0}
+  m_LocalPosition: {x: -7.56, y: -3.01, z: 0}
   m_LocalScale: {x: 5.171126, y: 3.5724387, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 507645781}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2066637691
@@ -6361,6 +6393,11 @@ MonoBehaviour:
   hp: 3
   damageaTime: 5
   flashTime: 0.1
+  attackPoint: {fileID: 507645781}
+  attackRadius: 0.46
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &2066637694
 MonoBehaviour:
   m_ObjectHideFlags: 0
