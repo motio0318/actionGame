@@ -30,6 +30,10 @@ public class PlayerManagement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool bJump;
 
+    public Transform attackPoint;
+    public float     attackRadius;
+    public LayerMask enemyLayer;
+
      void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -38,8 +42,15 @@ public class PlayerManagement : MonoBehaviour
         bJump = false;
 
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Attack();
+        }
 
-     void FixedUpdate()
+    }
+    void FixedUpdate()
     {
 
         //LookMoveDirec();
@@ -48,6 +59,24 @@ public class PlayerManagement : MonoBehaviour
         //HitFloor();
 
     }
+    void Attack()
+    {
+
+        anime.SetTrigger("Is Attack");
+        Debug.Log("çUåÇ");
+        Collider2D[] hitenemys = Physics2D.OverlapCircleAll(attackPoint.position,attackRadius,enemyLayer);
+        foreach(Collider2D hitEnemy in hitenemys)
+        {
+            Debug.Log(hitEnemy.gameObject.name + "Ç…çUåÇ");
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(attackPoint.position, attackRadius);
+    }
+
 
     private void Move()
     {
