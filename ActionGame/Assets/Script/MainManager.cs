@@ -25,6 +25,7 @@ public class MainManager : MonoBehaviour
         foreach(EnemySpawner enemySpawner in FindObjectsOfType<EnemySpawner>())
         {
             enemySpawner.enabled = true;
+
         }
     }
 
