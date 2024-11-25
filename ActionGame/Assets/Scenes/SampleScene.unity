@@ -6683,6 +6683,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  at: 1
 --- !u!114 &2066637694
 MonoBehaviour:
   m_ObjectHideFlags: 0

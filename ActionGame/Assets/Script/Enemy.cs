@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("ˆÚ“®‘¬“x")]
     private float moveSpeed;
 
-
+    public int hp = 3;
+    Animator animator;
     private Rigidbody2D rigid;
 
     void Start()
@@ -30,5 +31,20 @@ public class Enemy : MonoBehaviour
         rigid.velocity = new Vector2(Vector2.left.x * moveSpeed, rigid.velocity.y);
     }
 
+    public void OnDamage(int damage)
+    {
+        hp -= damage;
+        if(hp <= 0)
+        {
+            Die();
+        }
+    }
+
+
+    void Die()
+    {
+        hp = 0;
+        animator.SetTrigger("Die");
+    }
 
 }

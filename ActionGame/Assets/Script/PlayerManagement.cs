@@ -33,6 +33,8 @@ public class PlayerManagement : MonoBehaviour
     public Transform attackPoint;
     public float     attackRadius;
     public LayerMask enemyLayer;
+    public int at = 1;
+
 
      void Start()
     {
@@ -42,8 +44,12 @@ public class PlayerManagement : MonoBehaviour
         bJump = false;
 
     }
-    private void Update()
+    void Update()
     {
+
+        Move();
+        LookMoveDirec();
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             Attack();
@@ -54,8 +60,6 @@ public class PlayerManagement : MonoBehaviour
     {
 
         //LookMoveDirec();
-        Move();
-        LookMoveDirec();
         //HitFloor();
 
     }
@@ -65,9 +69,10 @@ public class PlayerManagement : MonoBehaviour
         anime.SetTrigger("Is Attack");
         Debug.Log("çUåÇ");
         Collider2D[] hitenemys = Physics2D.OverlapCircleAll(attackPoint.position,attackRadius,enemyLayer);
-        foreach(Collider2D hitEnemy in hitenemys)
+        foreach (Collider2D hitEnemy in hitenemys)
         {
             Debug.Log(hitEnemy.gameObject.name + "Ç…çUåÇ");
+            hitEnemy.GetComponent<Enemy>().OnDamage(at);
         }
     }
 
