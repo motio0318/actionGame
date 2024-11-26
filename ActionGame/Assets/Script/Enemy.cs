@@ -44,7 +44,8 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         hp = 0;
-        animator.SetTrigger("Die");
+        Destroy(gameObject);
+        //animator.SetTrigger("Die");
     }
 
 }
